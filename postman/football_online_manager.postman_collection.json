@@ -1,0 +1,98 @@
+{
+  "info": {
+    "name": "Football Online Manager",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "token", "value": "" },
+    { "key": "playerId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Auth - Login/Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"secret123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Teams - Get My Team",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/teams/my-team",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "teams", "my-team"]
+        }
+      }
+    },
+    {
+      "name": "Teams - Update Player Transfer Status",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/teams/players/{{playerId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "teams", "players", "{{playerId}}"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"isOnTransferList\": true,\n  \"askingPrice\": 1000000\n}"
+        }
+      }
+    },
+    {
+      "name": "Transfers - List",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transfers?teamName=Team&playerName=John&minPrice=100000&maxPrice=1000000",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transfers"],
+          "query": [
+            { "key": "teamName", "value": "Team" },
+            { "key": "playerName", "value": "John" },
+            { "key": "minPrice", "value": "100000" },
+            { "key": "maxPrice", "value": "1000000" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Transfers - Buy Player",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transfers/buy/{{playerId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transfers", "buy", "{{playerId}}"]
+        }
+      }
+    }
+  ]
+}
